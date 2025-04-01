@@ -1,0 +1,151 @@
+graph TB
+    subgraph "End Users"
+        Patients[Patients]
+        Providers[Healthcare Providers]
+        Agents[Contact Center Agents]
+    end
+
+    subgraph "Communication Channels"
+        Phone[Phone]
+        Chat[Web Chat]
+        SMS[SMS]
+        Email[Email]
+        MobileApp[Mobile App]
+        PatientPortal[Patient Portal]
+    end
+
+    subgraph "NICE CXone Platform"
+        subgraph "Interaction Layer"
+            ACD["ACD Routing"]
+            IVR["Healthcare IVR"]
+            Callback["Callback Queue"]
+            ChatBot["AI Chatbot"]
+            Omnichannel["Omnichannel Manager"]
+        end
+
+        subgraph "Business Logic Layer"
+            PatientID["Patient Identification"]
+            Authentication["Authentication Service"]
+            IntentEngine["Intent Recognition"]
+            WorkflowEngine["Workflow Engine"]
+            BusinessRules["Business Rules Engine"]
+            ComplianceEngine["HIPAA Compliance Engine"]
+        end
+
+        subgraph "Agent Experience"
+            Desktop["Agent Desktop"]
+            ScriptEngine["Dynamic Script Engine"]
+            KnowledgeBase["Healthcare Knowledge Base"]
+            AgentAssist["AI Agent Assist"]
+        end
+
+        subgraph "Analytics & Management"
+            WFM["Workforce Management"]
+            QM["Quality Management"]
+            Analytics["Healthcare Analytics"]
+            Dashboards["Executive Dashboards"]
+            Reporting["Compliance Reporting"]
+        end
+    end
+
+    subgraph "Integration Layer"
+        APIGateway["API Gateway"]
+        IntegrationBus["Enterprise Service Bus"]
+        DataTransform["Data Transformation"]
+        SecurityFilters["Security Filters"]
+        WebhookEngine["Webhook Engine"]
+    end
+
+    subgraph "Healthcare Systems"
+        EHR["Electronic Health Records"]
+        EMR["Electronic Medical Records"]
+        PatientMgmt["Patient Management System"]
+        Billing["Billing & Claims"]
+        Scheduling["Appointment Scheduling"]
+        Pharmacy["Pharmacy Systems"]
+    end
+
+    %% Connect End Users to Channels
+    Patients --> Phone
+    Patients --> Chat
+    Patients --> SMS
+    Patients --> Email
+    Patients --> MobileApp
+    Patients --> PatientPortal
+    Providers --> Phone
+    Providers --> PatientPortal
+    
+    %% Connect Channels to CXone Platform
+    Phone --> IVR
+    Chat --> ChatBot
+    SMS --> Omnichannel
+    Email --> Omnichannel
+    MobileApp --> Omnichannel
+    PatientPortal --> Omnichannel
+    
+    %% Connect Interaction Layer
+    IVR --> ACD
+    ChatBot --> ACD
+    Omnichannel --> ACD
+    ACD --> Callback
+    
+    %% Connect Business Logic Layer
+    ACD --> PatientID
+    PatientID --> Authentication
+    Authentication --> IntentEngine
+    IntentEngine --> WorkflowEngine
+    WorkflowEngine --> BusinessRules
+    BusinessRules --> ComplianceEngine
+    
+    %% Connect to Agent Experience
+    ComplianceEngine --> Desktop
+    ScriptEngine --> Desktop
+    KnowledgeBase --> Desktop
+    AgentAssist --> Desktop
+    Desktop --> Agents
+    
+    %% Connect Analytics
+    Desktop --> Analytics
+    Desktop --> QM
+    ACD --> WFM
+    WFM --> Dashboards
+    QM --> Dashboards
+    Analytics --> Dashboards
+    Analytics --> Reporting
+    ComplianceEngine --> Reporting
+    
+    %% Connect to Integration Layer
+    ComplianceEngine --> APIGateway
+    BusinessRules --> APIGateway
+    WorkflowEngine --> IntegrationBus
+    APIGateway --> DataTransform
+    IntegrationBus --> DataTransform
+    DataTransform --> SecurityFilters
+    SecurityFilters --> WebhookEngine
+    
+    %% Connect to Healthcare Systems
+    SecurityFilters --> EHR
+    SecurityFilters --> EMR
+    SecurityFilters --> PatientMgmt
+    SecurityFilters --> Billing
+    SecurityFilters --> Scheduling
+    SecurityFilters --> Pharmacy
+    
+    %% Styling
+    classDef endUsers fill:#f9d5e5,stroke:#333,stroke-width:1px
+    classDef channels fill:#eeeeee,stroke:#333,stroke-width:1px
+    classDef interaction fill:#d5e8f9,stroke:#333,stroke-width:1px
+    classDef business fill:#d5f9eb,stroke:#333,stroke-width:1px
+    classDef agent fill:#f9ecd5,stroke:#333,stroke-width:1px
+    classDef analytics fill:#e8d5f9,stroke:#333,stroke-width:1px
+    classDef integration fill:#f9d5d5,stroke:#333,stroke-width:1px
+    classDef healthcare fill:#d5f9d5,stroke:#333,stroke-width:1px
+    
+    class Patients,Providers,Agents endUsers
+    class Phone,Chat,SMS,Email,MobileApp,PatientPortal channels
+    class ACD,IVR,Callback,ChatBot,Omnichannel interaction
+    class PatientID,Authentication,IntentEngine,WorkflowEngine,BusinessRules,ComplianceEngine business
+    class Desktop,ScriptEngine,KnowledgeBase,AgentAssist agent
+    class WFM,QM,Analytics,Dashboards,Reporting analytics
+    class APIGateway,IntegrationBus,DataTransform,SecurityFilters,WebhookEngine integration
+    class EHR,EMR,PatientMgmt,Billing,Scheduling,Pharmacy healthcare
